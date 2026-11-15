@@ -1,6 +1,84 @@
+
+# Código BFS
+def bfs(grafo, vertice):    
+    visitados = []
+    fila = []
+
+    # PASSO 1
+    fila.append(vertice)
+
+    # PASSO 3
+    while len(fila) > 0:
+        print(f"visitados: {visitados}\nfila: {fila}")
+
+        # PASSO 3.B
+        visitados.append(fila[0])
+
+        # PASSO 3.C
+        for vizinho in grafo[fila[0]]:
+            # PASSO 3.D.II
+            if vizinho not in visitados and vizinho not in fila:
+                # PASSO 3.D.III
+                fila.append(vizinho)
+
+        removido = fila.pop(0)
+        # print(f"removido: {removido}")
+
+    # PASSO 4
+    return visitados
+
+
+# BFS Menor Caminho
+def menor_caminho(grafo, origem, destino):    
+    fila = []
+    fila.append(
+        {
+            'vertice': origem,
+            'caminho': [origem]
+        }
+    )
+
+    visitados = []
+
+    # PASSO 3
+    while len(fila) > 0:
+        removido = fila.pop(0)
+        vertice_atual = removido['vertice']
+        caminho_atual = removido['caminho']
+        
+        
+        # PASSO 3.b
+        if vertice_atual == destino:
+            return caminho_atual
+
+        # PASSO 3.c
+        if vertice_atual not in visitados:
+            visitados.append(vertice_atual)
+
+        # PASSO 3.d
+        vizinhos = grafo[vertice_atual]
+
+        # PASSO 3.e
+        na_fila = [item['vertice'] for item in fila] # pega todos os vértices que estão na fila
+        for vizinho in vizinhos:
+
+            if vizinho not in visitados and vizinho not in na_fila:
+                fila.append(
+                    {
+                        'vertice': vizinho,
+                        'caminho': caminho_atual + [vizinho] 
+                    }
+                )
+
+    # PASSO 4
+    return None
+
+
 # CRIAR GRAFO
 def criar_grafo():
-    return {}
+    grafo = {}
+
+    return grafo
 
 
 # INSERIR VÉRTICE
@@ -138,64 +216,78 @@ def adjacencia():
         print("7 - Grau dos vertices")
         print("8 - Listar vizinhos")
         print("9 - Verificar percurso")
+        print("10 - Breadth Search")
+        print("11 - Menor caminho entre 2 vértices")
         print("0 - Adeus")
         print("==========================")
 
         op = input("Escolha uma opção: ")
 
-        if op == "1":
-            exibir_grafo(grafo)
+        match op:
+            
+            case "1":
+                exibir_grafo(grafo)
 
-        elif op == "2":
-            vertice = input("Digite o vértice: ")
-            inserir_vertice(grafo, vertice)
+            case "2":
+                vertice = input("Digite o vértice: ")
+                inserir_vertice(grafo, vertice)
 
-        elif op == "3":
-            origem = input("Origem: ")
-            destino = input("Destino: ")
-            inserir_aresta(grafo, origem, destino, nao_direcionado)
+            case "3":
+                origem = input("Origem: ")
+                destino = input("Destino: ")
+                inserir_aresta(grafo, origem, destino, nao_direcionado)
 
-        elif op == "4":
-            vertice = input("Vértice para remover: ")
-            remover_vertice(grafo, vertice, nao_direcionado)
+            case "4":
+                vertice = input("Vértice para remover: ")
+                remover_vertice(grafo, vertice, nao_direcionado)
 
-        elif op == "5":
-            origem = input("Origem: ")
-            destino = input("Destino: ")
-            remover_aresta(grafo, origem, destino, nao_direcionado)
+            case "5":
+                origem = input("Origem: ")
+                destino = input("Destino: ")
+                remover_aresta(grafo, origem, destino, nao_direcionado)
 
-        elif op == "7":
-            graus = grau_vertices(grafo)
+            case "7":
+                graus = grau_vertices(grafo)
 
-            for vertice in graus:
-                print(vertice, ":", graus[vertice])
+                for vertice in graus:
+                    print(vertice, ":", graus[vertice])
 
-        elif op == "6":
-            origem = input("Origem: ")
-            destino = input("Destino: ")
+            case "6":
+                origem = input("Origem: ")
+                destino = input("Destino: ")
 
-            if existe_aresta(grafo, origem, destino):
-                print("Tem sim")
-            else:
-                print("Não tem viu")
+                if existe_aresta(grafo, origem, destino):
+                    print("Tem sim")
+                else:
+                    print("Não tem viu")
 
-        elif op == "8":
-            vertice = input("Digite o vértice: ")
-            listar_vizinhos(grafo, vertice)
+            case "8":
+                vertice = input("Digite o vértice: ")
+                listar_vizinhos(grafo, vertice)
 
-        elif op == "9":
-            caminho = input("Digite o caminho (A B C): ").split()
+            case "9":
+                caminho = input("Digite o caminho (A B C): ").split()
 
-            if percurso_valido(grafo, caminho):
-                print("Percurso válido.")
-            else:
-                print("Percurso impossível.")
+                if percurso_valido(grafo, caminho):
+                    print("Percurso válido.")
+                else:
+                    print("Percurso impossível.")
 
-        elif op == "0":
-            print("Encerrando....")
-            break
+            case "10":
+                vertice = input("Digite o vértice que deseja iniciar: ")
+                print(bfs(grafo, vertice))
+            
+            case "11":
+                origem = input("Origem: ")
+                destino = input("Destino: ")
 
-        else:
-            print("Chapou")
+                caminho = menor_caminho(grafo, origem, destino)
+                if caminho:
+                    print(f"Menor caminho: {caminho}")
+
+            case "0":
+                print("Encerrando....")
+                break
 
 
+adjacencia()
