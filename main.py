@@ -4,7 +4,7 @@ def main():
     op = ""
     
     while op != "0":
-        print("1- Lista de adjacência\n2- Matriz\n3- Lista de arestas\n0- Fechar")
+        print("1- Lista de adjacência (CONTÉM ATIVIDADE DE BFS)\n2- Matriz\n3- Lista de arestas\n0- Fechar")
         print("Selecione a atividade:")
         op = input()
         
