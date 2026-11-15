@@ -33,6 +33,10 @@ def bfs(grafo, vertice):
 
 # BFS Menor Caminho
 def menor_caminho(grafo, origem, destino):    
+    
+    if len(grafo) == 0:
+        return None
+    
     fila = []
     fila.append(
         {
