@@ -1,8 +1,11 @@
 
-# Código BFS
+# Breadth-First Search
 def bfs(grafo, vertice):    
     visitados = []
     fila = []
+    
+    if len(grafo) == 0:
+        return "Grafo vazio! Não foi possível realizar busca."
 
     # PASSO 1
     fila.append(vertice)
@@ -284,10 +287,9 @@ def adjacencia():
                 caminho = menor_caminho(grafo, origem, destino)
                 if caminho:
                     print(f"Menor caminho: {caminho}")
+                else:
+                    print(f"Não foi possível realizar a busca entre 2 caminhos.")
 
             case "0":
                 print("Encerrando....")
                 break
-
-
-adjacencia()
